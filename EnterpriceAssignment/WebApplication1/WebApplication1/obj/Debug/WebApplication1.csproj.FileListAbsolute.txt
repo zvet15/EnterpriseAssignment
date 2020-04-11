@@ -118,3 +118,6 @@ C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplica
 C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
 C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Drive.v2.dll
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Drive.v2.pdb
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Drive.v2.xml

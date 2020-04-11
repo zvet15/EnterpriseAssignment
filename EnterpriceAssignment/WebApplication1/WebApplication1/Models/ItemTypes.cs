@@ -16,7 +16,6 @@ namespace WebApplication1.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
         public string Image { get; set; }
 
         [Required]

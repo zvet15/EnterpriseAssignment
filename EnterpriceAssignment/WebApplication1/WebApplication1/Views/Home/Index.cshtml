@@ -30,7 +30,7 @@
     </div>
 </div>
 @* Google *@
-@*@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <div class="row" style="margin-top:10px;margin-bottom:10px;">
         <div class="col-md-2"><label for="file">Upload file on drive:</label></div>
@@ -44,4 +44,4 @@
     </div>
 }
 
-@ViewBag.Success*@
+@ViewBag.Success

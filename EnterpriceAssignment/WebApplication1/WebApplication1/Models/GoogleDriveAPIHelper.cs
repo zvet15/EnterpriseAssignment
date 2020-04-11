@@ -3,9 +3,7 @@ using Google.Apis.Drive.v3;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Web;
 
@@ -14,7 +12,7 @@ namespace WebApplication1.Models
     public class GoogleDriveAPIHelper
     {
         //add scope
-        public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive };
+        public static string[] Scopes = { Google.Apis.Drive.v3.DriveService.Scope.Drive};
 
         //create Drive API service.
         public static DriveService GetService()
@@ -63,10 +61,10 @@ namespace WebApplication1.Models
                 using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open))
                 {
                     request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
-                    request.Fields = "id";
+                    request.Fields = "id";                    
                    // var fileC = request.ResponseBody;                   
                     request.Upload();
-                }
+                }                 
             }
         }
     }

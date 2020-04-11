@@ -1,8 +1,7 @@
-﻿using PagedList;
-using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using Google.Apis.Drive.v3;
+using PagedList;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -53,10 +52,31 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                GoogleDriveAPIHelper.UplaodFileOnDrive(file);
-                itemTypes.Image = file.FileName;
-                db.ItemTypes.Add(itemTypes);
-                db.SaveChanges();
+                if (file != null && file.ContentLength > 0)
+                {
+                    //create service
+                   var service= GoogleDriveAPIHelper.GetService();
+                    //string path = Path.Combine(HttpContext.Current.Server.MapPath("~/GoogleDriveFiles"),
+                    //                           Path.GetFileName(file.FileName));
+                    string path = Path.Combine("C:\\Users\\Zvetlana Bajada\\Desktop\\EnterpriceAssignment\\WebApplication1\\WebApplication1\\GoogleDriveFiles",Path.GetFileName(file.FileName));
+                    file.SaveAs(path);
+                    var FileMetaData = new Google.Apis.Drive.v3.Data.File();
+                    FileMetaData.Name = Path.GetFileName(file.FileName);
+                    FileMetaData.MimeType = MimeMapping.GetMimeMapping(path);
+                    FilesResource.CreateMediaUpload request;
+                    using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open))
+                    {
+                        request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
+                        request.Fields = "id";
+                        // var fileC = request.ResponseBody;   
+                        request.Upload();
+                    }                 
+                    var filei = request.ResponseBody;
+                    itemTypes.Image= "https://drive.google.com/uc?id="+filei.Id;
+                    db.ItemTypes.Add(itemTypes);
+                    db.SaveChanges();
+                }
+               
                 return RedirectToAction("Index");
             }
 
