@@ -52,7 +52,12 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (file != null && file.ContentLength > 0)
+                //jpg and png only accepted
+
+                byte[] bytesRead = new byte[8];
+                file.InputStream.Read(bytesRead, 0, 8);
+
+                if (file != null && file.ContentLength > 0 && (bytesRead[0] == 255 && bytesRead[1] == 216 )|| (bytesRead[0] == 137 && bytesRead[1] == 80 && bytesRead[2] == 78 && bytesRead[3] == 71 && bytesRead[4] == 13 && bytesRead[5] == 10 && bytesRead[6] == 26 && bytesRead[7] == 10 ))
                 {
                     //create service
                    var service= GoogleDriveAPIHelper.GetService();
@@ -75,9 +80,12 @@ namespace WebApplication1.Controllers
                     itemTypes.Image= "https://drive.google.com/uc?id="+filei.Id;
                     db.ItemTypes.Add(itemTypes);
                     db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
-               
-                return RedirectToAction("Index");
+
+                //return RedirectToAction("Index");
+                ModelState.AddModelError("", "Invalid image");
+
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", itemTypes.CategoryId);
