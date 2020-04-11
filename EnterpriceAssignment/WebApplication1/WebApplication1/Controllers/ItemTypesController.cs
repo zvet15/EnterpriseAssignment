@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,10 +16,10 @@ namespace WebApplication1.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: ItemTypes
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var itemTypes = db.ItemTypes.Include(i => i.Categories);
-            return View(itemTypes.ToList());
+            return View(itemTypes.ToList().ToPagedList(page?? 1,5));
         }
 
         // GET: ItemTypes/Details/5
@@ -48,10 +49,12 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ItemTypeId,Name,Image,CategoryId")] ItemTypes itemTypes)
+        public ActionResult Create([Bind(Include = "ItemTypeId,Name,Image,CategoryId")] ItemTypes itemTypes, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                GoogleDriveAPIHelper.UplaodFileOnDrive(file);
+                itemTypes.Image = file.FileName;
                 db.ItemTypes.Add(itemTypes);
                 db.SaveChanges();
                 return RedirectToAction("Index");

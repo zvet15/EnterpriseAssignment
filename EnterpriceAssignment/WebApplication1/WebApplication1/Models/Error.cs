@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -14,5 +15,7 @@ namespace WebApplication1.Models
         public int ErrorId { get; set; }
 
         public string errorValue { get; set; }
+
     }
+    
 }

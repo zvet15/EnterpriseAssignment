@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -26,5 +27,13 @@ namespace WebApplication1.Controllers
 
             return View();
         }
+        //google
+        //[HttpPost]
+        //public ActionResult Index(HttpPostedFileBase file)
+        //{
+        //    GoogleDriveAPIHelper.UplaodFileOnDrive(file);
+        //    ViewBag.Success = "File Uploaded on Google Drive";
+        //    return View();
+        //}
     }
 }

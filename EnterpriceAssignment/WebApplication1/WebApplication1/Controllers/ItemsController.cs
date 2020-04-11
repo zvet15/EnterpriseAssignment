@@ -3,7 +3,8 @@ using System;
 using System.Data;
 using System.Data.Entity; 
 using System.Linq;
-using System.Net; 
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using WebApplication1.Models;
 
@@ -55,7 +56,7 @@ namespace WebApplication1.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
+                {                                    
                     var users = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
                     items.SellerId = users.Id;                 
                     items.Seller = users;

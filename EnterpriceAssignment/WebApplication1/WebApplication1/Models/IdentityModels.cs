@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -43,14 +44,81 @@ namespace WebApplication1.Models
                 quality.Add(new Quality() {type="Poor"});
                 quality.Add(new Quality() {type="Bad"});
                 context.Qualities.AddRange(quality);
+                context.SaveChanges();
+
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+                var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+                if (!roleManager.RoleExists("User"))
+                {
+                    IdentityRole role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    role.Name = "User";
+                    roleManager.Create(role);
+                }
+                //for (int i = 0; i < 5; i++)
+                //{
+                //    ApplicationUser genericUser = new ApplicationUser()
+                //    {
+                //        Email = "test.user." + i + "@hotmail.com",
+                //        UserName = "test.user." + i + "@hotmail.com"
+                //    };
+
+
+                //    context.Users.Add(genericUser);
+                //    userManager.Create(genericUser, "Test123!");
+                //    userManager.AddToRole(genericUser.Id, "User");
+                //}
+                ////------------------Categories-------------------------
+                //List<Categories> category = new List<Categories>();
+                //category.Add(new Categories() { CategoryName = "Food" });
+                //category.Add(new Categories() { CategoryName = "Clothes" });
+                //category.Add(new Categories() { CategoryName = "Hair" });
+                //category.Add(new Categories() { CategoryName = "Shoes" });
+                //category.Add(new Categories() { CategoryName = "Makeup" });
+                //context.Categories.AddRange(category);
+                //context.SaveChanges();
+                ////--------------ItemTypes-----------------------
+                //List<ItemTypes> itemTypes = new List<ItemTypes>();
+
+                //foreach (Categories categoryObj in context.Categories.Local)
+                //{
+                //    for (int i = 0; i < 21; i++)
+                //    {
+                //        itemTypes.Add(new ItemTypes() { Name = categoryObj.CategoryName + i, Categories = categoryObj, Image = "Testpath" });
+                //    }
+                //}
+
+                //context.ItemTypes.AddRange(itemTypes);
+                //context.SaveChanges();
+                //----------------Items-----------------------------
+            //    List<Items> item = new List<Items>();
+
+            //    foreach (ApplicationUser user in context.Users.Local)
+            //    {
+            //        foreach (ItemTypes itemtype in context.ItemTypes.Local)
+            //        {
+            //            foreach (Quality qualities in context.Qualities.Local)
+            //            {
+            //                Items newitem = new Items();
+            //                newitem.ItemTypes = itemtype;
+            //                newitem.SellerId = user.Id;
+            //                newitem.Quantity = new Random().Next(50, 101);
+            //                newitem.Quality = qualities;
+            //                newitem.Price = new Random().Next(102, 200);
+            //                item.Add(newitem);
+            //            }
+            //        }
+            //    }
+            //    context.Items.AddRange(item);
+            //    context.SaveChanges();
             }
+
         }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
         public System.Data.Entity.DbSet<WebApplication1.Models.Categories> Categories { get; set; }
-        public System.Data.Entity.DbSet<WebApplication1.Models.Quality> Qualities { get; set; } //not in the db
+        public System.Data.Entity.DbSet<WebApplication1.Models.Quality> Qualities { get; set; } 
 
         public System.Data.Entity.DbSet<WebApplication1.Models.ItemTypes> ItemTypes { get; set; }
 

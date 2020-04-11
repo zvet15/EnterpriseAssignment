@@ -383,6 +383,13 @@ namespace WebApplication1.Controllers
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
+                        using (ApplicationDbContext context = new ApplicationDbContext())
+                        {
+                            using (UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context)))
+                            {
+                                IdentityResult chkRole = userManager.AddToRole(user.Id, "User");
+                            }
+                        }
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
