@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using PagedList;
 using System;
 using System.Data;
 using System.Data.Entity; 
@@ -143,6 +144,34 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Order(int? page)
+        {
+            int size = 6;
+            int pageN = (page ?? 1);
+            var items = from i in db.Items
+                        select i;
+            items = items.OrderByDescending(i => i.ItemId);
+
+            return View(items.ToList().ToPagedList(pageN, size));
+        }
+
+        public ActionResult Search(int? page, string searchString)
+        {
+
+            int size = 6;
+            int pageN = (page ?? 1);
+
+            var items = from i in db.Items
+                        select i;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                items = items.Where(i => i.ItemTypes.Name.Contains(searchString));
+            }
+            items = items.OrderByDescending(i => i.ItemId);
+            return View(items.ToList().ToPagedList(pageN, size));
+
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

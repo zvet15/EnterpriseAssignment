@@ -61,15 +61,11 @@ namespace WebApplication1.Controllers
                 {
                     //create service
                    var service= GoogleDriveAPIHelper.GetService();
-                    //string path = Path.Combine(HttpContext.Current.Server.MapPath("~/GoogleDriveFiles"),
-                    //                           Path.GetFileName(file.FileName));
-                    string path = Path.Combine("C:\\Users\\Zvetlana Bajada\\Desktop\\EnterpriceAssignment\\WebApplication1\\WebApplication1\\GoogleDriveFiles",Path.GetFileName(file.FileName));
-                    file.SaveAs(path);
                     var FileMetaData = new Google.Apis.Drive.v3.Data.File();
                     FileMetaData.Name = Path.GetFileName(file.FileName);
-                    FileMetaData.MimeType = MimeMapping.GetMimeMapping(path);
+                    FileMetaData.MimeType = file.ContentType;
                     FilesResource.CreateMediaUpload request;
-                    using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open))
+                    using (var stream = file.InputStream)
                     {
                         request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
                         request.Fields = "id";
@@ -82,8 +78,7 @@ namespace WebApplication1.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-
-                //return RedirectToAction("Index");
+                
                 ModelState.AddModelError("", "Invalid image");
 
             }
@@ -113,14 +108,41 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemTypeId,Name,Image,CategoryId")] ItemTypes itemTypes)
+        public ActionResult Edit([Bind(Include = "ItemTypeId,Name,Image,CategoryId")] ItemTypes itemTypes, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(itemTypes).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                //jpg and png only accepted
+
+                byte[] bytesRead = new byte[8];
+                file.InputStream.Read(bytesRead, 0, 8);
+
+                if (file != null && file.ContentLength > 0 && (bytesRead[0] == 255 && bytesRead[1] == 216) || (bytesRead[0] == 137 && bytesRead[1] == 80 && bytesRead[2] == 78 && bytesRead[3] == 71 && bytesRead[4] == 13 && bytesRead[5] == 10 && bytesRead[6] == 26 && bytesRead[7] == 10))
+                {
+                    //create service
+                    var service = GoogleDriveAPIHelper.GetService();
+                    var FileMetaData = new Google.Apis.Drive.v3.Data.File();
+                    FileMetaData.Name = Path.GetFileName(file.FileName);
+                    FileMetaData.MimeType = file.ContentType;
+                    FilesResource.CreateMediaUpload request;
+                    using (var stream = file.InputStream)
+                    {
+                        request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
+                        request.Fields = "id";
+                        // var fileC = request.ResponseBody;   
+                        request.Upload();
+                    }
+                    var filei = request.ResponseBody;
+                    itemTypes.Image = "https://drive.google.com/uc?id=" + filei.Id;
+                    db.Entry(itemTypes).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("", "Invalid image");
+
             }
+
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", itemTypes.CategoryId);
             return View(itemTypes);
         }

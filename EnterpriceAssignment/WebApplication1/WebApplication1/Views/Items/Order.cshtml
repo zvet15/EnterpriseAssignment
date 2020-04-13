@@ -1,0 +1,27 @@
+﻿@model PagedList.IPagedList<WebApplication1.Models.Items>
+@using PagedList.Mvc;
+<br />
+
+<div class="container-fluid">
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Create New", "Create")</li>
+        <li>@Html.ActionLink("All Items", "Index")</li>
+        <li>@Html.ActionLink("Ordered Items", "Order")</li>
+        <li>@Html.ActionLink("Search Items", "Search")</li>
+    </ul>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4 d-flex justify-content-center">
+                @Html.Partial("_Items", item)
+            </div>
+        }
+    </div>
+</div>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Order",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

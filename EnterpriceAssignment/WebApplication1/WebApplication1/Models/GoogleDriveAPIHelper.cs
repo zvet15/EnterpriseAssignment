@@ -42,30 +42,5 @@ namespace WebApplication1.Models
             });
             return service;
         }
-
-
-        //file Upload to the Google Drive root folder.
-        public static void UplaodFileOnDrive(HttpPostedFileBase file)
-        {
-            if (file != null && file.ContentLength > 0)
-            {
-                //create service
-                DriveService service = GetService();
-                string path = Path.Combine(HttpContext.Current.Server.MapPath("~/GoogleDriveFiles"),
-                Path.GetFileName(file.FileName));
-                file.SaveAs(path);
-                var FileMetaData = new Google.Apis.Drive.v3.Data.File();
-                FileMetaData.Name = Path.GetFileName(file.FileName);
-                FileMetaData.MimeType = MimeMapping.GetMimeMapping(path);
-                FilesResource.CreateMediaUpload request;
-                using (var stream = new System.IO.FileStream(path, System.IO.FileMode.Open))
-                {
-                    request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
-                    request.Fields = "id";                    
-                   // var fileC = request.ResponseBody;                   
-                    request.Upload();
-                }                 
-            }
-        }
     }
 }

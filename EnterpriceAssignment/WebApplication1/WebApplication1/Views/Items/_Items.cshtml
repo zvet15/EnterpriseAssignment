@@ -1,0 +1,36 @@
+﻿@model WebApplication1.Models.Items
+
+<div class="card">
+    <img src="@Model.ItemTypes.Image" width="100" height="100" />
+
+    <div class="card-body">
+        <h5 class="card-title">
+            Item Type Name: @Html.DisplayFor(modelItem => @Model.ItemTypes.Name)
+        </h5>
+        <h5>
+            Quality Type: @Html.DisplayFor(modelItem => @Model.Quality.type)
+        </h5>
+        <h5>
+            User: @Html.DisplayFor(modelItem => @Model.SellerId)
+        </h5>
+        <h5>
+            Quantity:  @Html.DisplayFor(modelItem => @Model.Quantity)
+        </h5>
+        <h5>
+            Price: @Html.DisplayFor(modelItem => @Model.Price)
+        </h5>
+
+
+        <p class="card-text"></p>
+    </div>
+
+    <div class="card-body">
+        @if (User.Identity.Name == @Model.Seller.UserName)
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = @Model.ItemId })
+        }
+
+        @Html.ActionLink("Details", "Details", new { id = @Model.ItemId })
+        @Html.ActionLink("Delete", "Delete", new { id = @Model.ItemId })
+    </div>
+</div>

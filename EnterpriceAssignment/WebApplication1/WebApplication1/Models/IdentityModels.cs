@@ -81,35 +81,37 @@ namespace WebApplication1.Models
 
                 //foreach (Categories categoryObj in context.Categories.Local)
                 //{
-                //    for (int i = 0; i < 21; i++)
+                //    for (int i = 0; i <= 20; i++)
                 //    {
-                //        itemTypes.Add(new ItemTypes() { Name = categoryObj.CategoryName + i, Categories = categoryObj, Image = "Testpath" });
+                //        itemTypes.Add(new ItemTypes() { Name = categoryObj.CategoryName + i, Categories = categoryObj, Image = "https://drive.google.com/uc?id=1X8KEDqZ6ehyYkicXxcL-sFzytudNjMIy" });
                 //    }
                 //}
 
                 //context.ItemTypes.AddRange(itemTypes);
                 //context.SaveChanges();
-                //----------------Items-----------------------------
-            //    List<Items> item = new List<Items>();
+                ////----------------Items-----------------------------
 
-            //    foreach (ApplicationUser user in context.Users.Local)
-            //    {
-            //        foreach (ItemTypes itemtype in context.ItemTypes.Local)
-            //        {
-            //            foreach (Quality qualities in context.Qualities.Local)
-            //            {
-            //                Items newitem = new Items();
-            //                newitem.ItemTypes = itemtype;
-            //                newitem.SellerId = user.Id;
-            //                newitem.Quantity = new Random().Next(50, 101);
-            //                newitem.Quality = qualities;
-            //                newitem.Price = new Random().Next(102, 200);
-            //                item.Add(newitem);
-            //            }
-            //        }
-            //    }
-            //    context.Items.AddRange(item);
-            //    context.SaveChanges();
+                //List<Items> item = new List<Items>();
+                ////list of quantities and price
+                ////for loop (increment the counter in the list)
+                //foreach (ApplicationUser user in context.Users.Local)
+                //{
+                //    foreach (ItemTypes itemtype in context.ItemTypes.Local)
+                //    {
+                //        foreach (Quality qualities in context.Qualities.Local)
+                //        {
+                //            Items newitem = new Items();
+                //            newitem.ItemTypes = itemtype;
+                //            newitem.SellerId = user.Id;
+                //            newitem.Quantity = new Random().Next(1, 2100);
+                //            newitem.Quality = qualities;
+                //            newitem.Price = new Random().Next(50, 5200);                            
+                //            item.Add(newitem);
+                //        }
+                //    }
+                //}
+                //context.Items.AddRange(item);
+                //context.SaveChanges();
             }
 
         }

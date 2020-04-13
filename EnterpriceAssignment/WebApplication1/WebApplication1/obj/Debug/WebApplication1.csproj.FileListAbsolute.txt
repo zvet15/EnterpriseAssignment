@@ -121,3 +121,10 @@ C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplica
 C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Drive.v2.dll
 C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Drive.v2.pdb
 C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Drive.v2.xml
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Auth.Mvc.dll
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\System.Net.Http.Formatting.dll
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\System.Web.Http.dll
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Auth.Mvc.pdb
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\Google.Apis.Auth.Mvc.xml
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\System.Net.Http.Formatting.xml
+C:\Users\Zvetlana Bajada\Desktop\EnterpriceAssignment\WebApplication1\WebApplication1\bin\System.Web.Http.xml
