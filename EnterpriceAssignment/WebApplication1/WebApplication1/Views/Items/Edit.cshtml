@@ -18,7 +18,7 @@
         @Html.HiddenFor(model => model.ItemId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ItemTypeId, "ItemTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ItemTypeId, "ItemType", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ItemTypeId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.ItemTypeId, "", new { @class = "text-danger" })
@@ -32,9 +32,9 @@
                 @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
             </div>
         </div>
-        @Html.Hidden("SellerId");
+        @Html.Hidden("SellerId")
         <div class="form-group">
-            @Html.LabelFor(model => model.QualityId, "QualityId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.QualityId, "Quality", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("QualityId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.QualityId, "", new { @class = "text-danger" })

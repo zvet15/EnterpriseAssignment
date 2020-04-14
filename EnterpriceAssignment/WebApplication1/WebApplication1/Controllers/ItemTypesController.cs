@@ -69,7 +69,6 @@ namespace WebApplication1.Controllers
                     {
                         request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
                         request.Fields = "id";
-                        // var fileC = request.ResponseBody;   
                         request.Upload();
                     }                 
                     var filei = request.ResponseBody;
@@ -79,7 +78,7 @@ namespace WebApplication1.Controllers
                     return RedirectToAction("Index");
                 }
                 
-                ModelState.AddModelError("", "Invalid image");
+                ModelState.AddModelError("", "Invalid image, Image must be JPG or PNG");
 
             }
 
@@ -113,7 +112,7 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 //jpg and png only accepted
-
+                
                 byte[] bytesRead = new byte[8];
                 file.InputStream.Read(bytesRead, 0, 8);
 
@@ -132,15 +131,14 @@ namespace WebApplication1.Controllers
                         // var fileC = request.ResponseBody;   
                         request.Upload();
                     }
-                    var filei = request.ResponseBody;
+                    var filei = request.ResponseBody;                    
                     itemTypes.Image = "https://drive.google.com/uc?id=" + filei.Id;
+                    //itemTypes.ItemTypeId = 1;
                     db.Entry(itemTypes).State = EntityState.Modified;
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-
                 ModelState.AddModelError("", "Invalid image");
-
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", itemTypes.CategoryId);

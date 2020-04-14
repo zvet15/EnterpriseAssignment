@@ -5,13 +5,16 @@
 
     <div class="card-body">
         <h5 class="card-title">
+            Item Type ID: @Html.DisplayFor(modelItem => @Model.ItemId)
+        </h5>
+        <h5 class="card-title">
             Item Type Name: @Html.DisplayFor(modelItem => @Model.ItemTypes.Name)
         </h5>
         <h5>
             Quality Type: @Html.DisplayFor(modelItem => @Model.Quality.type)
         </h5>
         <h5>
-            User: @Html.DisplayFor(modelItem => @Model.SellerId)
+            User: @Html.DisplayFor(modelItem => @Model.Seller.UserName)
         </h5>
         <h5>
             Quantity:  @Html.DisplayFor(modelItem => @Model.Quantity)

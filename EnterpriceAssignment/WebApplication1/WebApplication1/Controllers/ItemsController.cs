@@ -20,7 +20,6 @@ namespace WebApplication1.Controllers
         {
             var user = User.Identity.GetUserId();
             var items = db.Items.Include(i => i.ItemTypes).Include(i => i.Quality); //.Include(y=>y.Seller).Where(y=>y.SellerId==user);
-            
             return View(items.ToList());    
         }
 
@@ -146,7 +145,7 @@ namespace WebApplication1.Controllers
 
         public ActionResult Order(int? page)
         {
-            int size = 6;
+            int size = 5;
             int pageN = (page ?? 1);
             var items = from i in db.Items
                         select i;
@@ -158,15 +157,17 @@ namespace WebApplication1.Controllers
         public ActionResult Search(int? page, string searchString)
         {
 
-            int size = 6;
+            int size = 5;
             int pageN = (page ?? 1);
 
             var items = from i in db.Items
                         select i;
 
+            var users = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+           
             if (!String.IsNullOrEmpty(searchString))
-            {
-                items = items.Where(i => i.ItemTypes.Name.Contains(searchString));
+            {                 
+                items = items.Where(i => i.Seller.UserName.Contains(searchString));             
             }
             items = items.OrderByDescending(i => i.ItemId);
             return View(items.ToList().ToPagedList(pageN, size));

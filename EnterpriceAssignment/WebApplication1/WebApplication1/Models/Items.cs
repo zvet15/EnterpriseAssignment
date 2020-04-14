@@ -14,22 +14,22 @@ namespace WebApplication1.Models
         [Required]
         public int ItemTypeId { get; set; }
 
-        [Index("IX_ITEM", 1, IsUnique = true)]
+        //[Index("IX_ITEM", 1, IsUnique = true)]
         public string SellerId { get; set; }
         public virtual ApplicationUser Seller { get; set; }
 
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Only possitive number allowed")]
-        [Index("IX_ITEM", 2,IsUnique = true)]
+        //[Index("IX_ITEM", 2,IsUnique = true)]
         public int Quantity { get; set; }
 
         [Required]
-        [Index("IX_ITEM",3,IsUnique = true)]
+        //[Index("IX_ITEM",3,IsUnique = true)]
         public int QualityId { get; set; }
 
         [Required]
         [Range(1,float.MaxValue,ErrorMessage ="Only possitive number allowed")]
-        [Index("IX_ITEM",4,IsUnique = true)]
+        //[Index("IX_ITEM",4,IsUnique = true)]
         public float Price { get; set; }
 
         public virtual ItemTypes ItemTypes { get; set; }

@@ -22,9 +22,7 @@ namespace WebApplication1.Models
             //Root Folder of project
              var CSPath = System.Web.Hosting.HostingEnvironment.MapPath("~/");
             using (var stream = new FileStream(Path.Combine(CSPath, "credentials.json"), FileMode.Open, FileAccess.Read))
-           // using (var stream = new FileStream(@"~/credentials.json", FileMode.Open, FileAccess.Read))
             {
-                //  String FolderPath ="E:\\";
                 String FolderPath=System.Web.Hosting.HostingEnvironment.MapPath("~/"); 
                 String FilePath = Path.Combine(FolderPath, "DriveServiceCredentials.json");
                 credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
