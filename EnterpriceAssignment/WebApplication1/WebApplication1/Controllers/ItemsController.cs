@@ -57,9 +57,9 @@ namespace WebApplication1.Controllers
             {
                 if (ModelState.IsValid)
                 {                                    
-                    var users = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
-                    items.SellerId = users.Id;                 
-                    items.Seller = users;
+                    var user = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name); 
+                  // items.SellerId = users.Id;                 
+                    items.Seller = user;
                     db.Items.Add(items);
                     db.SaveChanges();
                     return RedirectToAction("Index");

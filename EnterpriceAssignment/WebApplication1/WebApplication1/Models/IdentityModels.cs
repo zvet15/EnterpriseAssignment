@@ -42,10 +42,10 @@ namespace WebApplication1.Models
             {
                 base.Seed(context);
                 List<Quality> quality = new List<Quality>();
-                quality.Add(new Quality() {type="Good"});
-                quality.Add(new Quality() {type="Excellent"});
-                quality.Add(new Quality() {type="Poor"});
-                quality.Add(new Quality() {type="Bad"});
+                quality.Add(new Quality() { type = "Good" });
+                quality.Add(new Quality() { type = "Excellent" });
+                quality.Add(new Quality() { type = "Poor" });
+                quality.Add(new Quality() { type = "Bad" });
                 context.Qualities.AddRange(quality);
                 context.SaveChanges();
 
@@ -82,9 +82,9 @@ namespace WebApplication1.Models
 
                 foreach (Categories categoryO in context.Categories.Local)
                 {
-                    for (int i = 1; i <= 20; i++)
+                    for (int i = 1; i <= 5; i++)
                     {
-                        itemTypes.Add(new ItemTypes() { Name ="TestCategory"+i, Categories = categoryO, Image = "https://drive.google.com/uc?id=1X8KEDqZ6ehyYkicXxcL-sFzytudNjMIy" });
+                        itemTypes.Add(new ItemTypes() { Name = "TestCategory" + i, Categories = categoryO, Image = "https://drive.google.com/uc?id=1X8KEDqZ6ehyYkicXxcL-sFzytudNjMIy" });
                     }
                 }
 
@@ -92,31 +92,65 @@ namespace WebApplication1.Models
                 context.SaveChanges();
                 //----------------Items-----------------------------
                 List<Items> item = new List<Items>();
-                Random rnd = new Random();
-                Random tnd = new Random(); 
-                for (int i =0;i<=100;i++)
+
+                 Random rnd = new Random(); 
+                foreach (ApplicationUser appUser in context.Users.Local)
                 {
-                    foreach (ApplicationUser appUser in context.Users.Local)
+                    foreach (ItemTypes it in context.ItemTypes.Local)
                     {
-                      foreach(ItemTypes it in context.ItemTypes.Local)
-                      {
-                            item.Add(new Items()
+                       
+                        Items t = new Items();
+                        t.ItemTypeId = it.ItemTypeId;
+                        t.SellerId = appUser.Id;
+                        t.Quantity = rnd.Next(1, 9000);
+                        t.QualityId = rnd.Next(1, 4);
+                        t.Price = rnd.Next(50, 9000);
+                        bool isInList = false;
+                        foreach (Items itm in item)
+                        {
+                            if (itm.SellerId == t.SellerId && itm.QualityId == t.QualityId && itm.Quantity == t.Quantity
+                                && itm.Price == t.Price)
                             {
-                                ItemTypeId = it.ItemTypeId,
-                                SellerId = appUser.Id,
-                                Quantity =rnd.Next(1,5000),
-                                QualityId = new Random().Next(1, 4),
-                                Price = tnd.Next(50,7000)
-                            });
-                      }
-                    
+                                isInList = true;
+                            }
+                        }
+                        if (!isInList)
+                        {                                
+                             item.Add(t);                      
+                        }                       
+                     
                     }
                 }
+
                 context.Items.AddRange(item);
                 context.SaveChanges();
 
             }
+        }
 
+        public Items generateItems(ApplicationDbContext context)
+        {
+            List<Items> item = new List<Items>();
+
+            Random rnd = new Random();
+            Random tnd = new Random();
+            Random qu = new Random();
+            Items t = new Items();
+            foreach (ApplicationUser appUser in context.Users.Local)
+            {
+                foreach (ItemTypes it in context.ItemTypes.Local)
+                {
+                  
+                    t.ItemTypeId = it.ItemTypeId;
+                    t.SellerId = appUser.Id;
+                    t.Quantity = rnd.Next(1, 9000);
+                    t.QualityId = qu.Next(1, 4);
+                    t.Price = tnd.Next(50, 9000);
+               
+                }
+            }
+                 return t;
+                   
         }
         public static ApplicationDbContext Create()
         {

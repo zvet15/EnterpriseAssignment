@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -21,5 +22,7 @@ namespace WebApplication1.Models
         [Required]
         public int CategoryId { get; set; }
         public virtual Categories Categories { get; set; }
+
+        public virtual ICollection<Items> Items { get; set; }
     }
 }

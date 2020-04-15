@@ -15,5 +15,6 @@ namespace WebApplication1.Models
 
         [Required] 
         public string CategoryName { get; set; }
+
     }
 }

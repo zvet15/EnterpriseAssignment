@@ -55,31 +55,42 @@ namespace WebApplication1.Controllers
                 //jpg and png only accepted
 
                 byte[] bytesRead = new byte[8];
-                file.InputStream.Read(bytesRead, 0, 8);
-
-                if (file != null && file.ContentLength > 0 && (bytesRead[0] == 255 && bytesRead[1] == 216 )|| (bytesRead[0] == 137 && bytesRead[1] == 80 && bytesRead[2] == 78 && bytesRead[3] == 71 && bytesRead[4] == 13 && bytesRead[5] == 10 && bytesRead[6] == 26 && bytesRead[7] == 10 ))
+                if(file==null)
                 {
-                    //create service
-                   var service= GoogleDriveAPIHelper.GetService();
-                    var FileMetaData = new Google.Apis.Drive.v3.Data.File();
-                    FileMetaData.Name = Path.GetFileName(file.FileName);
-                    FileMetaData.MimeType = file.ContentType;
-                    FilesResource.CreateMediaUpload request;
-                    using (var stream = file.InputStream)
-                    {
-                        request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
-                        request.Fields = "id";
-                        request.Upload();
-                    }                 
-                    var filei = request.ResponseBody;
-                    itemTypes.Image= "https://drive.google.com/uc?id="+filei.Id;
-                    db.ItemTypes.Add(itemTypes);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+                    
+                    ModelState.AddModelError("", "Image is Required");
                 }
-                
-                ModelState.AddModelError("", "Invalid image, Image must be JPG or PNG");
+                else
+                {
+                    file.InputStream.Read(bytesRead, 0, 8);
+                      
 
+                    if ((bytesRead[0] == 255 && bytesRead[1] == 216 )|| (bytesRead[0] == 137 && 
+                        bytesRead[1] == 80 && bytesRead[2] == 78 && bytesRead[3] == 71 && bytesRead[4] == 13 && bytesRead[5] == 10 && bytesRead[6] == 26 && bytesRead[7] == 10 ))
+                    {
+                        //create service
+                       var service= GoogleDriveAPIHelper.GetService();
+                        var FileMetaData = new Google.Apis.Drive.v3.Data.File();
+                        FileMetaData.Name = Path.GetFileName(file.FileName);
+                        FileMetaData.MimeType = file.ContentType;
+                        FilesResource.CreateMediaUpload request;
+                        using (var stream = file.InputStream)
+                        {
+                            request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
+                            request.Fields = "id";
+                            request.Upload();
+                        }                 
+                        var filei = request.ResponseBody;
+                        itemTypes.Image= "https://drive.google.com/uc?id="+filei.Id;
+                        var cat = db.Categories.FirstOrDefault(x => x.CategoryId == itemTypes.CategoryId);
+                        itemTypes.Categories = cat;
+                        db.ItemTypes.Add(itemTypes);
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                 
+                      ModelState.AddModelError("", "Invalid image, Image must be JPG or PNG");
+                }
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", itemTypes.CategoryId);
@@ -112,33 +123,45 @@ namespace WebApplication1.Controllers
             if (ModelState.IsValid)
             {
                 //jpg and png only accepted
-                
-                byte[] bytesRead = new byte[8];
-                file.InputStream.Read(bytesRead, 0, 8);
 
-                if (file != null && file.ContentLength > 0 && (bytesRead[0] == 255 && bytesRead[1] == 216) || (bytesRead[0] == 137 && bytesRead[1] == 80 && bytesRead[2] == 78 && bytesRead[3] == 71 && bytesRead[4] == 13 && bytesRead[5] == 10 && bytesRead[6] == 26 && bytesRead[7] == 10))
+                byte[] bytesRead = new byte[8];
+                if (file == null)
                 {
-                    //create service
-                    var service = GoogleDriveAPIHelper.GetService();
-                    var FileMetaData = new Google.Apis.Drive.v3.Data.File();
-                    FileMetaData.Name = Path.GetFileName(file.FileName);
-                    FileMetaData.MimeType = file.ContentType;
-                    FilesResource.CreateMediaUpload request;
-                    using (var stream = file.InputStream)
-                    {
-                        request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
-                        request.Fields = "id";
-                        // var fileC = request.ResponseBody;   
-                        request.Upload();
-                    }
-                    var filei = request.ResponseBody;                    
-                    itemTypes.Image = "https://drive.google.com/uc?id=" + filei.Id;
-                    //itemTypes.ItemTypeId = 1;
-                    db.Entry(itemTypes).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
+
+                    ModelState.AddModelError("", "Image is Required");
                 }
-                ModelState.AddModelError("", "Invalid image");
+                else
+                {
+                    file.InputStream.Read(bytesRead, 0, 8);
+
+
+                    if ((bytesRead[0] == 255 && bytesRead[1] == 216) || (bytesRead[0] == 137 &&
+                        bytesRead[1] == 80 && bytesRead[2] == 78 && bytesRead[3] == 71 && bytesRead[4] == 13 && bytesRead[5] == 10 && bytesRead[6] == 26 && bytesRead[7] == 10))
+                    {
+                        //create service
+                        var service = GoogleDriveAPIHelper.GetService();
+                        var FileMetaData = new Google.Apis.Drive.v3.Data.File();
+                        FileMetaData.Name = Path.GetFileName(file.FileName);
+                        FileMetaData.MimeType = file.ContentType;
+                        FilesResource.CreateMediaUpload request;
+                        using (var stream = file.InputStream)
+                        {
+                            request = service.Files.Create(FileMetaData, stream, FileMetaData.MimeType);
+                            request.Fields = "id";
+                            // var fileC = request.ResponseBody;   
+                            request.Upload();
+                        }
+                        var filei = request.ResponseBody;
+                        itemTypes.Image = "https://drive.google.com/uc?id=" + filei.Id;
+                        //itemTypes.ItemTypeId = 1;
+                        var cat = db.Categories.FirstOrDefault(x => x.CategoryId == itemTypes.CategoryId);
+                        itemTypes.Categories = cat;
+                        db.Entry(itemTypes).State = EntityState.Modified;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    ModelState.AddModelError("", "Invalid image");
+                }
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "CategoryName", itemTypes.CategoryId);
