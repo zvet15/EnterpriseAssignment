@@ -21,7 +21,7 @@ namespace WebApplication1.Models
         public string SellerId { get; set; } 
         public virtual ApplicationUser Seller { get; set; }
 
-        [Required]
+        [Required (ErrorMessage ="Quantity field is required")]
         [Range(1, int.MaxValue, ErrorMessage = "Only possitive number allowed")]
         [Index("IX_ITEM", 2,IsUnique = true)]
         public int Quantity { get; set; }
@@ -30,7 +30,7 @@ namespace WebApplication1.Models
         [Index("IX_ITEM",3,IsUnique = true)]
         public int QualityId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Price field is required")]
         [Range(1,float.MaxValue,ErrorMessage ="Only possitive number allowed")]
         [Index("IX_ITEM",4,IsUnique = true)]
         public float Price { get; set; }

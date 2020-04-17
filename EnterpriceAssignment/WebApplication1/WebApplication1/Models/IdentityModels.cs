@@ -42,8 +42,8 @@ namespace WebApplication1.Models
             {
                 base.Seed(context);
                 List<Quality> quality = new List<Quality>();
-                quality.Add(new Quality() { type = "Good" });
                 quality.Add(new Quality() { type = "Excellent" });
+                quality.Add(new Quality() { type = "Good" });
                 quality.Add(new Quality() { type = "Poor" });
                 quality.Add(new Quality() { type = "Bad" });
                 context.Qualities.AddRange(quality);

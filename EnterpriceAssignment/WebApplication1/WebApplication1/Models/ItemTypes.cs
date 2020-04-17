@@ -14,7 +14,7 @@ namespace WebApplication1.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ItemTypeId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="Item Type name is required")]
         public string Name { get; set; }
 
         public string Image { get; set; }
