@@ -60,6 +60,8 @@ namespace WebApplication1.Controllers
                     var user = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name); 
                   // items.SellerId = users.Id;                 
                     items.Seller = user;
+                    DateTime dt = DateTime.Now;
+                    items.Date = dt;
                     db.Items.Add(items);
                     db.SaveChanges();
                     return RedirectToAction("Index");
@@ -149,7 +151,7 @@ namespace WebApplication1.Controllers
             int pageN = (page ?? 1);
             var items = from i in db.Items
                         select i;
-            items = items.OrderByDescending(i => i.ItemId);
+            items = items.OrderByDescending(i => i.Date);
 
             return View(items.ToList().ToPagedList(pageN, size));
         }
@@ -169,7 +171,7 @@ namespace WebApplication1.Controllers
             {                 
                 items = items.Where(i => i.Seller.UserName.Contains(searchString));             
             }
-            items = items.OrderByDescending(i => i.ItemId);
+            items = items.OrderByDescending(i => i.Date);
             return View(items.ToList().ToPagedList(pageN, size));
 
         }

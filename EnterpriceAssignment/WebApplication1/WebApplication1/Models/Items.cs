@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
  
@@ -32,6 +33,10 @@ namespace WebApplication1.Models
         [Range(1,float.MaxValue,ErrorMessage ="Only possitive number allowed")]
         [Index("IX_ITEM",4,IsUnique = true)]
         public float Price { get; set; }
+
+        [Required]
+        [Index("IX_ITEM", 5, IsUnique = true)]
+        public DateTime Date { get; set; }
 
         public virtual ItemTypes ItemTypes { get; set; }
         public virtual Quality Quality { get; set; } 

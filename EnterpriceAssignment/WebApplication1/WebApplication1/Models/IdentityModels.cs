@@ -100,8 +100,10 @@ namespace WebApplication1.Models
                     {
                        
                         Items t = new Items();
+                        DateTime dt = DateTime.Now;
                         t.ItemTypeId = it.ItemTypeId;
                         t.SellerId = appUser.Id;
+                        t.Date = dt;
                         t.Quantity = rnd.Next(1, 9000);
                         t.QualityId = rnd.Next(1, 4);
                         t.Price = rnd.Next(50, 9000);
@@ -123,7 +125,7 @@ namespace WebApplication1.Models
                 }
 
                 context.Items.AddRange(item);
-                context.SaveChanges();
+             context.SaveChanges();
 
             }
         }
