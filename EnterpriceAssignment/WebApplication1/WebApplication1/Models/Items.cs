@@ -16,8 +16,9 @@ namespace WebApplication1.Models
         [Required]
         public int ItemTypeId { get; set; }
 
-        [Index("IX_ITEM", 1, IsUnique = true)]
-        public string SellerId { get; set; }
+
+        [Index("IX_ITEM", 1, IsUnique = true)] 
+        public string SellerId { get; set; } 
         public virtual ApplicationUser Seller { get; set; }
 
         [Required]

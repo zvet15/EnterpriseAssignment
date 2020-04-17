@@ -170,7 +170,8 @@ namespace WebApplication1.Controllers
            
             if (!String.IsNullOrEmpty(searchString))
             {                 
-                items = items.Where(i => i.Seller.UserName.Contains(searchString));             
+                items = items.Where(i => i.Seller.UserName.Contains(searchString));
+                ViewBag.searchString = searchString;
             }
             items = items.OrderByDescending(i => i.Date);
             return View(items.ToList().ToPagedList(pageN, size));
