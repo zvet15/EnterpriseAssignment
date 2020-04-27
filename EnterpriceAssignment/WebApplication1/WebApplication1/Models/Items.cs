@@ -36,7 +36,7 @@ namespace WebApplication1.Models
         public float Price { get; set; }
 
         [Required]
-        [Index("IX_ITEM", 5, IsUnique = true)]
+        [Index("IX_Date", 5)]
         public DateTime Date { get; set; }
 
         public virtual ItemTypes ItemTypes { get; set; }

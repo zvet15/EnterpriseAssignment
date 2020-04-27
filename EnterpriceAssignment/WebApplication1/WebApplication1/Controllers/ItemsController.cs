@@ -101,7 +101,7 @@ namespace WebApplication1.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ItemId,ItemTypeId,SellerId,Quantity,QualityId,Price")] Items items)
+        public ActionResult Edit([Bind(Include = "ItemId,ItemTypeId,SellerId,Quantity,Date,QualityId,Price")] Items items)
         {
 
             if (ModelState.IsValid)
